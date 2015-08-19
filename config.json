@@ -1,0 +1,16 @@
+﻿{
+    "services": [
+        {
+            "endpoint": "steakscorp.org",
+            "port": 80
+        },
+        {
+            "endpoint": "steakscorp.org",
+            "port": 22
+        },
+        {
+            "endpoint": "steakscorp.org",
+            "port": 53
+        }
+    ]
+}
