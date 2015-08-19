@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0.20150819",
+    "version": "0.0.1",
     "name": "is-my-server-up",
     "private": true,
     "dependencies": {
