@@ -1,9 +1,5 @@
 ﻿var net = require("net");
-
-enum TransportProtocol {
-    TCP,
-    UDP,
-}
+import TransportProtcol = require("./TransportProtocol");
 
 /**
  * Represents a given host and port. Handles checking whether a host 
@@ -15,14 +11,11 @@ class MonitoredSocket {
      */
     public isUp: boolean;
     private socket: any;
-    
+
     constructor(
         public endpoint: string,
-        public port: number,
-        public type: TransportProtocol
-    ) {
-        this.connect();
-    }
+        public port: number
+        ) { }
 
     connect(): void {
         this.socket = net.socket();
@@ -52,7 +45,8 @@ class MonitoredSocket {
 
     toString(): string {
         return "Monitoring " + this.endpoint
-            + " on " + TransportProtocol[this.type]
-            + " port " + this.port;
+            + " on port " + this.port;
     }
 }
+
+export = MonitoredSocket;
