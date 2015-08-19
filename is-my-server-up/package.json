@@ -1,0 +1,8 @@
+{
+    "version": "0.1.0.20150819",
+    "name": "is-my-server-up",
+    "private": true,
+    "dependencies": {
+        "net": "^1.0.2"
+    }
+}

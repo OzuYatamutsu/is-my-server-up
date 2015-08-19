@@ -28,8 +28,11 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="node.d.ts" />
+    <TypeScriptCompile Include="socket-check.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="package.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
