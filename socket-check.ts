@@ -1,5 +1,4 @@
-﻿/// <reference path="node.d.ts" />
-var net = require("net");
+﻿var net = require("net");
 
 enum TransportProtocol {
     TCP,
@@ -11,24 +10,44 @@ enum TransportProtocol {
  * is up or not, as well as if it is accessible on the given port.
  */
 class MonitoredSocket {
+    /**
+     * Returns whether the host can be accessed on its port.
+     */
+    public isUp: boolean;
+    private socket: any;
+    
     constructor(
         public endpoint: string,
         public port: number,
         public type: TransportProtocol
-    ) { }
-
-    /**
-     * Returns whether the host is up or not.
-     */
-    isUp(): boolean {
-        return false; // TODO
+    ) {
+        this.connect();
     }
 
-    /**
-     * Returns whether the host can be accessed on its port.
-     */
-    isAccessible(): boolean {
-        return false; // TODO
+    connect(): void {
+        this.socket = net.socket();
+        this.socket.connect(
+            this.port,
+            this.endpoint,
+            this.onConnectSuccess
+        );
+        this.socket.on("error", this.onConnectFailure);
+    }
+
+    onConnectSuccess(): void {
+        this.isUp = true;
+        console.log("CONNECTED"); // DEBUG
+
+        // We're good! Close the socket
+        this.socket.end();
+    }
+
+    onConnectFailure(): void {
+        this.isUp = false;
+        console.log("NOT CONNECTED"); // DEBUG
+
+        // Cleanup
+        this.socket.destroy();
     }
 
     toString(): string {
