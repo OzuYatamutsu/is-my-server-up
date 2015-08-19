@@ -1,5 +1,4 @@
 ﻿var net = require("net");
-import TransportProtcol = require("./TransportProtocol");
 
 /**
  * Represents a given host and port. Handles checking whether a host 
@@ -24,6 +23,7 @@ class MonitoredSocket {
             this.endpoint,
             this.onConnectSuccess
         );
+
         this.socket.on("error", this.onConnectFailure);
     }
 
