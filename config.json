@@ -1,4 +1,9 @@
 ﻿{
+    "serv": {
+        "ip": "127.0.0.1",
+        "port": 1337
+    },
+
     "services": [
         {
             "endpoint": "steakscorp.org",
