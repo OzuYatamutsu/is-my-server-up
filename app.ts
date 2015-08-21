@@ -8,13 +8,15 @@ var listenIp: string = config["serv"].ip;
 var listenPort: number = config["serv"].port;
 
 var responseData: string = fs.readFileSync("index.html", "utf-8");
-var monitoredSocks: Array<MonitoredSocket>;
+var monitoredSocks: Array<MonitoredSocket> = [];
 
 function init(): void {
     for (var service in config["services"]) {
         monitoredSocks.push(
             new MonitoredSocket(service.endpoint, service.port)
         );
+
+        console.log("Monitoring: " + service.endpoint + ":" + service.port);
     }
 }
 
@@ -34,3 +36,5 @@ http.createServer(function (request, response) {
     response.write(processResponse());
     response.end();
 }).listen(listenPort, listenIp);
+
+console.log("Now listening on " + listenIp + ":" + listenPort);
