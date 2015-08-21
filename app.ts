@@ -2,7 +2,7 @@
 import MonitoredSocket = require("./MonitoredSocket");
 import http = require("http");
 import fs = require("fs");
-var config = require("config");
+var config = require("./config");
 
 var listenIp: string = config["serv"].ip;
 var listenPort: number = config["serv"].port;
