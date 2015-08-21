@@ -4,19 +4,24 @@ import http = require("http");
 import fs = require("fs");
 var config = require("./config");
 
-var listenIp: string = config["serv"].ip;
-var listenPort: number = config["serv"].port;
+var listenIp: string = config.serv.ip;
+var listenPort: number = config.serv.port;
 
 var responseData: string = fs.readFileSync("index.html", "utf-8");
 var monitoredSocks: Array<MonitoredSocket> = [];
 
 function init(): void {
-    for (var service in config["services"]) {
+    var services = config.services;
+
+    for (var index in services) {
         monitoredSocks.push(
-            new MonitoredSocket(service.endpoint, service.port)
+            new MonitoredSocket(
+                services[index].endpoint,
+                services[index].port
+            )
         );
 
-        console.log("Monitoring: " + service.endpoint + ":" + service.port);
+        console.log("Monitoring: " + services[index].endpoint + ":" + services[index].port);
     }
 }
 
