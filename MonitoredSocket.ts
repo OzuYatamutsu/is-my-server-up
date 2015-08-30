@@ -1,4 +1,4 @@
-﻿var net = require("net");
+﻿import net = require("net");
 
 /**
  * Represents a given host and port. Handles checking whether a host 
@@ -17,6 +17,7 @@ class MonitoredSocket {
         ) { }
 
     connect(): void {
+        console.log(JSON.stringify(net));
         this.socket = net.socket();
         this.socket.connect(
             this.port,
