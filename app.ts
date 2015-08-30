@@ -27,10 +27,10 @@ function init(): void {
 
 function processResponse(): string {
     var output: string = "";
-    for (var sock in monitoredSocks) {
+    monitoredSocks.forEach(function (sock) {
         sock.connect();
         output += sock.isUp;
-    }
+    });
 
     return output;
 }
