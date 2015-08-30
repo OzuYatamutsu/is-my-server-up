@@ -17,7 +17,6 @@ class MonitoredSocket {
         ) { }
 
     connect(): void {
-        console.log(JSON.stringify(net));
         this.socket = net.socket();
         this.socket.connect(
             this.port,
