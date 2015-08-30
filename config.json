@@ -16,6 +16,10 @@
         {
             "endpoint": "steakscorp.org",
             "port": 53
+        },
+        {
+            "endpoint": "steakscorp.org",
+            "port": 65534
         }
     ]
 }
