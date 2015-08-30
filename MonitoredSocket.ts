@@ -9,22 +9,23 @@ class MonitoredSocket {
      * Returns whether the host can be accessed on its port.
      */
     public isUp: boolean;
-    private socket: any;
+    private socket: net.Socket;
 
     constructor(
         public endpoint: string,
         public port: number
-        ) { }
+    ) {
+        this.socket = new net.Socket();
+    }
 
     connect(): void {
-        this.socket = net.socket();
         this.socket.connect(
             this.port,
             this.endpoint,
-            this.onConnectSuccess
+            this.onConnectSuccess.bind(this)
         );
 
-        this.socket.on("error", this.onConnectFailure);
+        this.socket.on("error", this.onConnectFailure.bind(this));
     }
 
     onConnectSuccess(): void {
