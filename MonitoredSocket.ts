@@ -28,22 +28,22 @@ class MonitoredSocket {
         this.socket.on("error", this.onConnectFailure.bind(this, failCallback));
     }
 
-    onConnectSuccess(callback : {(): void}) {
+    onConnectSuccess(callback: {(sock: MonitoredSocket): void }) {
         this.isUp = true;
 
         // We're good! Close the socket
         this.socket.end();
 
-        callback();
+        callback(this);
     }
 
-    onConnectFailure(callback: {(): void }) {
+    onConnectFailure(callback: {(sock: MonitoredSocket): void }) {
         this.isUp = false;
 
         // Cleanup
         this.socket.destroy();
 
-        callback();
+        callback(this);
     }
 
     toString(): string {
