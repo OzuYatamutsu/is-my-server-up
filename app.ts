@@ -28,11 +28,22 @@ function init(): void {
 function processResponse(): string {
     var output: string = "";
     monitoredSocks.forEach(function (sock) {
-        sock.connect();
-        output += sock.isUp;
+        sock.connect(sockUp, sockDown);
+        
     });
 
+    console.log("DEBUG_TEST " + monitoredSocks[0].isUp);
     return output;
+}
+
+function sockUp(sock: MonitoredSocket): void {
+    console.log(sock.toString() + "is up!");
+    // TODO
+}
+
+function sockDown(sock: MonitoredSocket): void {
+    console.log(sock.toString() + "is down!");
+    // TODO
 }
 
 init();
