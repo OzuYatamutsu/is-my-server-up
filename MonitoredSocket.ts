@@ -18,7 +18,8 @@ class MonitoredSocket {
         this.socket = new net.Socket();
     }
 
-    connect(successCallback : void, failCallback : void): void {
+    connect(successCallback: { (sock: MonitoredSocket): void },
+        failCallback: { (sock: MonitoredSocket): void }): void {
         this.socket.connect(
             this.port,
             this.endpoint,
