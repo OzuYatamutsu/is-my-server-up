@@ -18,30 +18,32 @@ class MonitoredSocket {
         this.socket = new net.Socket();
     }
 
-    connect(): void {
+    connect(successCallback : void, failCallback : void): void {
         this.socket.connect(
             this.port,
             this.endpoint,
-            this.onConnectSuccess.bind(this)
+            this.onConnectSuccess.bind(this, successCallback)
         );
 
-        this.socket.on("error", this.onConnectFailure.bind(this));
+        this.socket.on("error", this.onConnectFailure.bind(this, failCallback));
     }
 
-    onConnectSuccess(): void {
+    onConnectSuccess(callback : {(): void}) {
         this.isUp = true;
-        console.log("CONNECTED"); // DEBUG
 
         // We're good! Close the socket
         this.socket.end();
+
+        callback();
     }
 
-    onConnectFailure(): void {
+    onConnectFailure(callback: {(): void }) {
         this.isUp = false;
-        console.log("NOT CONNECTED"); // DEBUG
 
         // Cleanup
         this.socket.destroy();
+
+        callback();
     }
 
     toString(): string {
