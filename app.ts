@@ -29,7 +29,6 @@ function processResponse(): string {
     var output: string = "";
     monitoredSocks.forEach(function (sock) {
         sock.connect(sockUp, sockDown);
-        
     });
 
     console.log("DEBUG_TEST " + monitoredSocks[0].isUp);
@@ -37,12 +36,12 @@ function processResponse(): string {
 }
 
 function sockUp(sock: MonitoredSocket): void {
-    console.log(sock.toString() + "is up!");
+    console.log(sock.toString() + " is up!");
     // TODO
 }
 
 function sockDown(sock: MonitoredSocket): void {
-    console.log(sock.toString() + "is down!");
+    console.log(sock.toString() + " is down!");
     // TODO
 }
 
