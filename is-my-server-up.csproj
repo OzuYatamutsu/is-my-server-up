@@ -23,7 +23,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.css" />
-    <Content Include="index.html" />
+    <Content Include="example\index.html" />
+    <Content Include="example\style.css" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
