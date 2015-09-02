@@ -3,6 +3,6 @@
     "name": "is-my-server-up",
     "private": true,
     "dependencies": {
-        
+        "engine.io": "*"
     }
 }
