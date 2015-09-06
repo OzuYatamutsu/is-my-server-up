@@ -1,14 +1,18 @@
 ﻿/// <reference path="MonitoredSocket.ts" />
 import MonitoredSocket = require("./MonitoredSocket");
+import ws = require("websocket");
 import http = require("http");
 import fs = require("fs");
 var config = require("./config");
 
 var listenIp: string = config.serv.ip;
 var listenPort: number = config.serv.port;
+var wsPort: number = 8888; // TODO: DEBUG
 
 var responseData: string = fs.readFileSync("index.html", "utf-8");
 var monitoredSocks: Array<MonitoredSocket> = [];
+
+var outputTarget: string = "<!-- APP_DATA -->";
 
 function init(): void {
     var services = config.services;
@@ -31,7 +35,6 @@ function processResponse(): string {
         sock.connect(sockUp, sockDown);
     });
 
-    console.log("DEBUG_TEST " + monitoredSocks[0].isUp);
     return output;
 }
 

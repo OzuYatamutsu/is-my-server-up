@@ -33,6 +33,7 @@
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
     <TypeScriptCompile Include="MonitoredSocket.ts" />
+    <TypeScriptCompile Include="Scripts\typings\websocket\websocket.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
@@ -80,7 +81,7 @@
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <TypeScriptOutFile />
     <TypeScriptOutDir />
-    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />

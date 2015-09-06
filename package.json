@@ -1,8 +1,9 @@
 {
-    "version": "0.0.1",
     "name": "is-my-server-up",
+    "version": "0.0.10",
+    "description": "A poller to check whether a remote service is accessible.",
     "private": true,
     "dependencies": {
-        "engine.io": "*"
+        "websocket": "*"
     }
 }
