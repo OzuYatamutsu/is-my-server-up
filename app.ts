@@ -7,12 +7,12 @@ var config = require("./config");
 
 var listenIp: string = config.serv.ip;
 var listenPort: number = config.serv.port;
-var wsPort: number = 8888; // TODO: DEBUG
+var httpServer = http.createServer().listen(listenPort, listenIp);
+var wsServer = new ws.server({
+    httpServer: httpServer
+});
 
-var responseData: string = fs.readFileSync("index.html", "utf-8");
 var monitoredSocks: Array<MonitoredSocket> = [];
-
-var outputTarget: string = "<!-- APP_DATA -->";
 
 function init(): void {
     var services = config.services;
@@ -40,19 +40,18 @@ function processResponse(): string {
 
 function sockUp(sock: MonitoredSocket): void {
     console.log(sock.toString() + " is up!");
-    // TODO
+    wsServer.emit(sock.serialize());
 }
 
 function sockDown(sock: MonitoredSocket): void {
     console.log(sock.toString() + " is down!");
-    // TODO
+    wsServer.emit(sock.serialize());
 }
 
-init();
+wsServer.on('request', function (req) {
+    // Not implemented
+});
 
-http.createServer(function (request, response) {
-    response.write(processResponse());
-    response.end();
-}).listen(listenPort, listenIp);
+init();
 
 console.log("Now listening on " + listenIp + ":" + listenPort);

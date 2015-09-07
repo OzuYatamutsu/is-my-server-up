@@ -51,6 +51,10 @@ class MonitoredSocket {
         return "Monitoring " + this.endpoint
             + " on port " + this.port;
     }
+
+    serialize(): string {
+        return JSON.stringify(this);
+    }
 }
 
 export = MonitoredSocket;
