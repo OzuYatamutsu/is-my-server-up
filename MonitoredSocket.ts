@@ -19,32 +19,32 @@ class MonitoredSocket {
     }
 
     connect(successCallback: { (sock: MonitoredSocket, conn?: any): void },
-        failCallback: { (sock: MonitoredSocket, conn?: any): void }): void {
+        failCallback: { (sock: MonitoredSocket, conn?: any): void }, conn?: any): void {
         this.socket.connect(
             this.port,
             this.endpoint,
-            this.onConnectSuccess.bind(this, successCallback)
+            this.onConnectSuccess.bind(this, successCallback, conn)
         );
 
-        this.socket.on("error", this.onConnectFailure.bind(this, failCallback));
+        this.socket.on("error", this.onConnectFailure.bind(this, failCallback, conn));
     }
 
-    onConnectSuccess(callback: { (sock: MonitoredSocket, conn?: any): void }) {
+    onConnectSuccess(callback: { (sock: MonitoredSocket, conn?: any): void }, conn?: any) {
         this.isUp = true;
 
         // We're good! Close the socket
         this.socket.end();
 
-        callback(this);
+        callback(this, conn);
     }
 
-    onConnectFailure(callback: { (sock: MonitoredSocket, conn?: any): void }) {
+    onConnectFailure(callback: { (sock: MonitoredSocket, conn?: any): void }, conn?: any) {
         this.isUp = false;
 
         // Cleanup
         this.socket.destroy();
 
-        callback(this);
+        callback(this, conn);
     }
 
     toString(): string {
