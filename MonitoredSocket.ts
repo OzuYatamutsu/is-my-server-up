@@ -51,11 +51,11 @@ class MonitoredSocket {
         return this.endpoint + ":" + this.port;
     }
 
-    serialize(): Object {
-        return {
+    serialize(): string {
+        return JSON.stringify({
             "socket": this.endpoint + ":" + this.port,
             "status": this.isUp
-        };
+        });
     }
 }
 
