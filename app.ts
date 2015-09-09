@@ -29,7 +29,7 @@ function init(): void {
     }
 }
 
-function processResponse(): string {
+function processResponse(conn: ws.connection): string {
     var output: string = "";
     monitoredSocks.forEach(function (sock) {
         sock.connect(sockUp, sockDown);
@@ -38,18 +38,19 @@ function processResponse(): string {
     return output;
 }
 
-function sockUp(sock: MonitoredSocket): void {
+function sockUp(conn: ws.connection, sock: MonitoredSocket): void {
     console.log(sock.toString() + " is up!");
-    wsServer.emit(sock.serialize());
+    conn.send(sock.serialize());
 }
 
-function sockDown(sock: MonitoredSocket): void {
+function sockDown(conn: ws.connection, sock: MonitoredSocket): void {
     console.log(sock.toString() + " is down!");
-    wsServer.emit(sock.serialize());
+    conn.send(sock.serialize());
 }
 
 wsServer.on('request', function (req) {
-    // Not implemented
+    var connection = req.accept(null, req.origin);
+    processResponse(connection);
 });
 
 init();
