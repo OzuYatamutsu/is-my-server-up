@@ -48,8 +48,7 @@ class MonitoredSocket {
     }
 
     toString(): string {
-        return "Monitoring " + this.endpoint
-            + " on port " + this.port;
+        return this.endpoint + ":" + this.port;
     }
 
     serialize(): string {
