@@ -29,13 +29,10 @@ function init(): void {
     }
 }
 
-function processResponse(conn: ws.connection): string {
-    var output: string = "";
+function processResponse(conn: ws.connection): void {
     monitoredSocks.forEach(function (sock) {
         sock.connect(sockUp, sockDown);
     });
-
-    return output;
 }
 
 function sockUp(sock: MonitoredSocket, conn: ws.connection): void {
@@ -50,7 +47,8 @@ function sockDown(sock: MonitoredSocket, conn: ws.connection): void {
 
 wsServer.on('request', function (req) {
     var connection = req.accept(null, req.origin);
-    processResponse(connection);
+    if (connection != null)
+        processResponse(connection);
 });
 
 init();
