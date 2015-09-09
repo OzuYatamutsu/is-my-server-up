@@ -3,9 +3,17 @@
     <head>
         <title>is-my-server-up display test</title>
         <link rel="stylesheet" src="style.css" />
+        <script type="text/javascript">
+            window.WebSocket = window.WebSocket || window.MozWebSocket;
+            var conn = new WebSocket("ws://127.0.0.1:1337");
+            conn.onmessage = function (message) {
+                console.log(JSON.stringify(message)); // DEBUG
+            }
+        </script>
     </head>
     <body>
         <table id="app-table">
+            <!-- APP_DATA -->
         </table>
     </body>
 </html>
