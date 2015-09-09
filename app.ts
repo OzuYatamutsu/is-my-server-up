@@ -31,7 +31,7 @@ function init(): void {
 
 function processResponse(conn: ws.connection): void {
     monitoredSocks.forEach(function (sock) {
-        sock.connect(sockUp, sockDown);
+        sock.connect(sockUp, sockDown, conn);
     });
 }
 
