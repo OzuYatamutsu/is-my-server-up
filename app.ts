@@ -38,12 +38,12 @@ function processResponse(conn: ws.connection): string {
     return output;
 }
 
-function sockUp(conn: ws.connection, sock: MonitoredSocket): void {
+function sockUp(sock: MonitoredSocket, conn: ws.connection): void {
     console.log(sock.toString() + " is up!");
     conn.send(sock.serialize());
 }
 
-function sockDown(conn: ws.connection, sock: MonitoredSocket): void {
+function sockDown(sock: MonitoredSocket, conn: ws.connection): void {
     console.log(sock.toString() + " is down!");
     conn.send(sock.serialize());
 }
