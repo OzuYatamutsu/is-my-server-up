@@ -18,8 +18,8 @@ class MonitoredSocket {
         this.socket = new net.Socket();
     }
 
-    connect(successCallback: { (sock: MonitoredSocket): void },
-        failCallback: { (sock: MonitoredSocket): void }): void {
+    connect(successCallback: { (sock: MonitoredSocket, conn?: any): void },
+        failCallback: { (sock: MonitoredSocket, conn?: any): void }): void {
         this.socket.connect(
             this.port,
             this.endpoint,
@@ -29,7 +29,7 @@ class MonitoredSocket {
         this.socket.on("error", this.onConnectFailure.bind(this, failCallback));
     }
 
-    onConnectSuccess(callback: {(sock: MonitoredSocket): void }) {
+    onConnectSuccess(callback: { (sock: MonitoredSocket, conn?: any): void }) {
         this.isUp = true;
 
         // We're good! Close the socket
@@ -38,7 +38,7 @@ class MonitoredSocket {
         callback(this);
     }
 
-    onConnectFailure(callback: {(sock: MonitoredSocket): void }) {
+    onConnectFailure(callback: { (sock: MonitoredSocket, conn?: any): void }) {
         this.isUp = false;
 
         // Cleanup
