@@ -23,8 +23,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.css" />
+    <Content Include="example\deps\app.js" />
+    <Content Include="example\deps\bootstrap-theme.css" />
+    <Content Include="example\deps\bootstrap.css" />
+    <Content Include="example\deps\bootstrap.js" />
+    <Content Include="example\deps\ie-emulation-modes-warning.js" />
+    <Content Include="example\deps\ie10-viewport-bug-workaround.js" />
+    <Content Include="example\deps\theme.css" />
     <Content Include="example\index.html" />
-    <Content Include="example\style.css" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
