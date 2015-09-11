@@ -1,12 +1,17 @@
 ﻿/// <reference path="MonitoredSocket.ts" />
+/// <reference path="Sqlite.ts" />
 import MonitoredSocket = require("./MonitoredSocket");
+import Sqlite = require("./Sqlite");
+var config = require("./config");
+
+// NPM packages
 import ws = require("websocket");
 import http = require("http");
 import fs = require("fs");
-var config = require("./config");
 
 var listenIp: string = config.serv.ip;
 var listenPort: number = config.serv.port;
+var trackReliability: boolean = config.serv.trackReliability;
 var httpServer = http.createServer().listen(listenPort, listenIp);
 var wsServer = new ws.server({
     httpServer: httpServer
