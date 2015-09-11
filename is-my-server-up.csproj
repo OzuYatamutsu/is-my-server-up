@@ -27,7 +27,6 @@
     <Content Include="example\deps\bootstrap-theme.css" />
     <Content Include="example\deps\bootstrap.css" />
     <Content Include="example\deps\bootstrap.js" />
-    <Content Include="example\deps\ie-emulation-modes-warning.js" />
     <Content Include="example\deps\ie10-viewport-bug-workaround.js" />
     <Content Include="example\deps\theme.css" />
     <Content Include="example\index.html" />
@@ -39,7 +38,9 @@
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
     <TypeScriptCompile Include="MonitoredSocket.ts" />
+    <TypeScriptCompile Include="Scripts\typings\sqlite3\sqlite3.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\websocket\websocket.d.ts" />
+    <TypeScriptCompile Include="Sqlite.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />

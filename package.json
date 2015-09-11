@@ -4,6 +4,7 @@
     "description": "A poller to check whether a remote service is accessible.",
     "private": true,
     "dependencies": {
-        "websocket": "*"
+        "websocket": "*",
+        "sqlite3": "*"
     }
 }
