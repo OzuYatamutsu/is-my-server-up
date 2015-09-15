@@ -18,7 +18,9 @@ function injectHtml(endpoint, reliability, status) {
 function generateHtml(endpoint, reliability, status) {
     return '<tr class="endpoint' + statusToString(status)
         + '"><td class="host">' + endpoint 
-        + '</td><td class="reliability">' + reliability 
+        + '</td><td class="reliability-5m">' + reliability["5m"]
+        + '</td><td class="reliability-1h">' + reliability["1h"]
+        + '</td><td class="reliability-1d">' + reliability["1d"]
         + '</td><td class="status">' + statusToString(status)
         + '</td></tr>'
 }
@@ -28,5 +30,5 @@ function statusToString(status) {
 }
 
 function getReliability(endpoint) {
-    return "N/A"; // DEBUG
+    return { "5m": "N/A", "1h": "N/A", "1d": "N/A" }; // DEBUG
 }
