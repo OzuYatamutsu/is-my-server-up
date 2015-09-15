@@ -28,5 +28,5 @@ function statusToString(status) {
 }
 
 function getReliability(endpoint) {
-    return 100.0; // DEBUG
+    return "N/A"; // DEBUG
 }
