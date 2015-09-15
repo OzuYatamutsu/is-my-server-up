@@ -44,7 +44,7 @@ function update(socket: string, status: boolean): void {
 }
 
 function prepareStatements() {
-    updateStatus = db.prepare("INSERT INTO Status (socket, datetime, status) VALUES (?, ?, ?)");
+    updateStatus = db.prepare("INSERT OR IGNORE INTO Status (socket, datetime, status) VALUES (?, ?, ?)");
     get5mPercent = db.prepare("SELECT AVG(status) as avg FROM (SELECT status FROM Status WHERE socket = (?) AND datetime >= (?) - 300)");
     get1hPercent = db.prepare("SELECT AVG(status) as avg FROM (SELECT status FROM Status WHERE socket = (?) AND datetime >= (?) - 3600)");
     get1dPercent = db.prepare("SELECT AVG(status) as avg FROM (SELECT status FROM Status WHERE socket = (?) AND datetime >= (?) - 86400)");
