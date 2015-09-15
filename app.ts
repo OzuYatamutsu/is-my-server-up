@@ -16,6 +16,7 @@ var httpServer = http.createServer().listen(listenPort, listenIp);
 var wsServer = new ws.server({
     httpServer: httpServer
 });
+var db: Sqlite;
 
 var monitoredSocks: Array<MonitoredSocket> = [];
 
@@ -32,6 +33,19 @@ function init(): void {
 
         console.log("Monitoring: " + services[index].endpoint + ":" + services[index].port);
     }
+
+    if (trackReliability)
+        initDb();
+}
+
+function initDb(): void {
+    var sockets: string[];
+
+    for (var sock in monitoredSocks) {
+        sockets.push(sock.toString());
+    }
+
+    db = new Sqlite(sockets);
 }
 
 function processResponse(conn: ws.connection): void {
