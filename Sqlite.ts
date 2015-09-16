@@ -21,6 +21,7 @@ class Sqlite {
             this.db = new sqlite.Database(this.dbName);
             this.db.run("CREATE TABLE Sockets (socket TEXT PRIMARY KEY, t_5m REAL, t_1h REAL, t_1d REAL, UNIQUE(socket))");
             this.db.run("CREATE TABLE Status (socket TEXT, datetime INTEGER, status INTEGER, UNIQUE(datetime))");
+            console.log("Initialized database");
         }
 
         else
@@ -28,10 +29,11 @@ class Sqlite {
             this.db = new sqlite.Database(this.dbName);
 
         for (var socket in sockets) {
-            this.db.run("INSERT OR IGNORE INTO Sockets(socket, t_5m REAL, t_1h REAL, t_1d REAL) VALUES ((?), 1, 1, 1)", socket);
+            this.db.run("INSERT OR IGNORE INTO Sockets(socket, t_5m, t_1h, t_1d) VALUES ((?), 1, 1, 1)", socket);
         }
 
         this.prepareStatements();
+        console.log("Database ready!");
     }
 
     update(socket: string, status: boolean): void {
