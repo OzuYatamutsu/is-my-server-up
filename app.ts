@@ -39,7 +39,7 @@ function init(): void {
 }
 
 function initDb(): void {
-    var sockets: string[];
+    var sockets: string[] = [];
 
     for (var sock in monitoredSocks) {
         sockets.push(sock.toString());
@@ -66,8 +66,11 @@ function sockDown(sock: MonitoredSocket, conn: ws.connection): void {
 
 wsServer.on('request', function (req) {
     var connection = req.accept(null, req.origin);
-    if (connection != null)
+    if (connection != null) {
         processResponse(connection);
+        // Loop every 5 minutes
+        setInterval(processResponse, 300000, connection);
+    }
 });
 
 init();
