@@ -38,6 +38,7 @@
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
     <TypeScriptCompile Include="MonitoredSocket.ts" />
+    <TypeScriptCompile Include="Scripts\typings\q\Q.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\sqlite3\sqlite3.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\websocket\websocket.d.ts" />
     <TypeScriptCompile Include="Sqlite.ts" />
