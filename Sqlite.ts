@@ -1,5 +1,6 @@
 ﻿import sqlite = require("sqlite3");
 import fs = require("fs");
+import q = require("q");
 
 class Sqlite {
     private dbName: string = "server-up-rel.db"; // DEBUG
@@ -15,25 +16,32 @@ class Sqlite {
     private update1hPercent: sqlite.Statement;
     private update1dPercent: sqlite.Statement;
 
-    constructor (sockets: string[]) {
-        if (fs.existsSync(this.dbName)) {
-            // Create and init database
-            this.db = new sqlite.Database(this.dbName);
-            this.db.run("CREATE TABLE Sockets (socket TEXT PRIMARY KEY, t_5m REAL, t_1h REAL, t_1d REAL, UNIQUE(socket))");
-            this.db.run("CREATE TABLE Status (socket TEXT, datetime INTEGER, status INTEGER, UNIQUE(datetime))");
-            console.log("Initialized database");
-        }
+    constructor(sockets: string[]) {
+        q.fcall(() => {
+            if (!fs.existsSync(this.dbName)) {
+                // Create and init database
+                this.db = new sqlite.Database(this.dbName);
+                q.fcall(() => {
+                    this.db.run("CREATE TABLE Sockets (socket TEXT PRIMARY KEY, t_5m REAL, t_1h REAL, t_1d REAL, UNIQUE(socket))");
+                    this.db.run("CREATE TABLE Status (socket TEXT, datetime INTEGER, status INTEGER, UNIQUE(datetime))"); // Race condition?
+                }).then(() => {
+                    console.log("Initialized database");
+                });
+            }
 
-        else
-            // Just open it
-            this.db = new sqlite.Database(this.dbName);
-
-        for (var socket in sockets) {
-            this.db.run("INSERT OR IGNORE INTO Sockets(socket, t_5m, t_1h, t_1d) VALUES ((?), 1, 1, 1)", socket);
-        }
-
-        this.prepareStatements();
-        console.log("Database ready!");
+            else {
+                // Just open it
+                this.db = new sqlite.Database(this.dbName);
+                console.log("Loaded database");
+            }
+        }).then(() => {
+            this.prepareStatements();
+            for (var socket in sockets) {
+                this.db.run("INSERT OR IGNORE INTO Sockets(socket, t_5m, t_1h, t_1d) VALUES ((?), 1, 1, 1)", socket);
+            }
+        }).then(() => {
+            console.log("Database ready!");
+        });
     }
 
     update(socket: string, status: boolean): void {
