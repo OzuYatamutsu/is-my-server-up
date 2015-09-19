@@ -5,7 +5,6 @@
     "private": true,
     "dependencies": {
         "websocket": "*",
-        "sqlite3": "^3.1.0",
-        "q": "^1.4.1"
+        "sqlite3": "^3.1.0"
     }
 }
