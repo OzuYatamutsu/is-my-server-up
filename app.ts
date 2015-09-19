@@ -41,8 +41,8 @@ function init(): void {
 function initDb(): void {
     var sockets: string[] = [];
 
-    for (var sock in monitoredSocks) {
-        sockets.push(sock.toString());
+    for (var i = 0; i < monitoredSocks.length; i++) {
+        sockets.push(monitoredSocks[i].toString());
     }
 
     db = new Sqlite(sockets);

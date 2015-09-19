@@ -32,8 +32,8 @@ class Sqlite {
         }
 
         this.prepareStatements();
-        for (var socket in sockets) {
-            this.db.run("INSERT OR IGNORE INTO Sockets(socket, t_5m, t_1h, t_1d) VALUES ((?), 1, 1, 1)", socket);
+        for (var i = 0; i < sockets.length; i++) {
+            this.db.run("INSERT OR IGNORE INTO Sockets(socket, t_5m, t_1h, t_1d) VALUES ((?), 1, 1, 1)", sockets[i]);
         }
 
         console.log("Database ready!");
@@ -43,13 +43,24 @@ class Sqlite {
         // Unix time, in seconds
         var currentTime = Math.floor(Date.now() / 1000);
 
+        //console.log("DEBUG: " + JSON.stringify(this.updateStatus.bind(socket, currentTime, status)));
         this.updateStatus.run(socket, currentTime, status);
-        this.update5mPercent.run(this.get5mPercent.run(socket, currentTime), socket);
-        this.update1hPercent.run(this.get1hPercent.run(socket, currentTime), socket);
-        this.update1dPercent.run(this.get1dPercent.run(socket, currentTime), socket);
+
+        // debug
+        this.get5mPercent.get((err, row) => {
+            this.update5mPercent.run(row, socket);
+        }, socket, currentTime);
+
+        this.get1hPercent.get((err, row) => {
+            this.update1hPercent.run(row, socket);
+        }, socket, currentTime);
+
+        this.get1dPercent.get((err, row) => {
+            this.update1dPercent.run(row, socket);
+        }, socket, currentTime);
     }
 
-    prepareStatements(): void{
+    prepareStatements(): void {
         this.updateStatus = this.db.prepare("INSERT OR IGNORE INTO Status (socket, datetime, status) VALUES (?, ?, ?)");
         this.get5mPercent = this.db.prepare("SELECT AVG(status) as avg FROM (SELECT status FROM Status WHERE socket = (?) AND datetime >= (?) - 300)");
         this.get1hPercent = this.db.prepare("SELECT AVG(status) as avg FROM (SELECT status FROM Status WHERE socket = (?) AND datetime >= (?) - 3600)");
