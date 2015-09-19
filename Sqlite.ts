@@ -43,10 +43,8 @@ class Sqlite {
         // Unix time, in seconds
         var currentTime = Math.floor(Date.now() / 1000);
 
-        //console.log("DEBUG: " + JSON.stringify(this.updateStatus.bind(socket, currentTime, status)));
         this.updateStatus.run(socket, currentTime, status);
 
-        // debug
         this.get5mPercent.get((err, row) => {
             this.update5mPercent.run(row, socket);
         }, socket, currentTime);
