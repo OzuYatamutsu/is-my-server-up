@@ -57,11 +57,15 @@ function processResponse(conn: ws.connection): void {
 function sockUp(sock: MonitoredSocket, conn: ws.connection): void {
     console.log(sock.toString() + " is up!");
     conn.send(sock.serialize());
+    if (trackReliability)
+        db.update(sock.toString(), true);
 }
 
 function sockDown(sock: MonitoredSocket, conn: ws.connection): void {
     console.log(sock.toString() + " is down!");
     conn.send(sock.serialize());
+    if (trackReliability)
+        db.update(sock.toString(), false);
 }
 
 wsServer.on('request', function (req) {
