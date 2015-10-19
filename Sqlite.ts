@@ -14,6 +14,7 @@ class Sqlite {
     private update5mPercent: sqlite.Statement;
     private update1hPercent: sqlite.Statement;
     private update1dPercent: sqlite.Statement;
+    private getAll: sqlite.Statement;
 
     constructor(sockets: string[]) {
         if (!fs.existsSync(this.dbName)) {
@@ -66,6 +67,27 @@ class Sqlite {
         this.update5mPercent = this.db.prepare("UPDATE Sockets SET t_5m = (?) WHERE socket = (?)");
         this.update1hPercent = this.db.prepare("UPDATE Sockets SET t_1h = (?) WHERE socket = (?)");
         this.update1dPercent = this.db.prepare("UPDATE Sockets SET t_1d = (?) WHERE socket = (?)");
+        this.getAll = this.db.prepare("SELECT t_5m, t_1h, t_1d FROM Sockets WHERE socket = (?)");
+    }
+
+    getReliability(socket: string, callback: { (stats: Object, conn?: any): void }, conn?: any): void {
+        var t_5m, t_1h, t_1d: number;
+        var result: Object;
+        this.getAll.get((err, row) => {
+            t_5m = row["t_5m"];
+            t_1h = row["t_1h"];
+            t_1d = row["t_1d"];
+            result = this.serialize(t_5m, t_1h, t_1d);
+            callback(result, conn);
+        });
+    }
+
+    serialize(t_5m: number, t_1h: number, t_1d: number): Object {
+        return {
+            "t_5m": t_5m,
+            "t_1h": t_1h,
+            "t_1d": t_1d
+        };
     }
 }
 
