@@ -77,13 +77,14 @@ class Sqlite {
             t_5m = row["t_5m"];
             t_1h = row["t_1h"];
             t_1d = row["t_1d"];
-            result = this.serialize(t_5m, t_1h, t_1d);
+            result = this.serialize(socket, t_5m, t_1h, t_1d);
             callback(result, conn);
         });
     }
 
-    serialize(t_5m: number, t_1h: number, t_1d: number): Object {
+    serialize(socket: string, t_5m: number, t_1h: number, t_1d: number): Object {
         return {
+            "socket": socket,
             "t_5m": t_5m,
             "t_1h": t_1h,
             "t_1d": t_1d
