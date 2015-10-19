@@ -74,12 +74,14 @@ class Sqlite {
         var t_5m, t_1h, t_1d: number;
         var result: Object;
         this.getAll.get((err, row) => {
+            console.log("DB_QUERY_DEBUG_1: " + JSON.stringify(err));
+            console.log("DB_QUERY_DEBUG_2: " + JSON.stringify(row));
             t_5m = row["t_5m"];
             t_1h = row["t_1h"];
             t_1d = row["t_1d"];
             result = this.serialize(socket, t_5m, t_1h, t_1d);
             callback(result, conn);
-        });
+        }, socket);
     }
 
     serialize(socket: string, t_5m: number, t_1h: number, t_1d: number): Object {
