@@ -51,6 +51,8 @@ function initDb(): void {
 function processResponse(conn: ws.connection): void {
     monitoredSocks.forEach(function (sock) {
         sock.connect(sockUp, sockDown, conn);
+        if (trackReliability)
+            db.getReliability(sock.toString(), onReliabilityStatsReady);
     });
 }
 
@@ -66,6 +68,11 @@ function sockDown(sock: MonitoredSocket, conn: ws.connection): void {
     conn.send(sock.serialize());
     if (trackReliability)
         db.update(sock.toString(), false);
+}
+
+function onReliabilityStatsReady(stats: Object, conn: ws.connection): void {
+    console.log("Stats ready! Sending!");
+    conn.send(stats);
 }
 
 wsServer.on('request', function (req) {
