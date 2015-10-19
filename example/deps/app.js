@@ -30,5 +30,13 @@ function statusToString(status) {
 }
 
 function getReliability(endpoint) {
+    conn.send(constructReliabilityQuery(endpoint));
     return { "5m": "N/A", "1h": "N/A", "1d": "N/A" }; // DEBUG
+}
+
+function constructReliabilityQuery(endpoint) {
+    return JSON.stringify({
+        "type": "RELIBILITY_QUERY",
+        "endpoint": endpoint
+    });
 }

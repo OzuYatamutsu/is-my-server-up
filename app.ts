@@ -51,8 +51,6 @@ function initDb(): void {
 function processResponse(conn: ws.connection): void {
     monitoredSocks.forEach(function (sock) {
         sock.connect(sockUp, sockDown, conn);
-        if (trackReliability)
-            db.getReliability(sock.toString(), onReliabilityStatsReady);
     });
 }
 
@@ -70,8 +68,14 @@ function sockDown(sock: MonitoredSocket, conn: ws.connection): void {
         db.update(sock.toString(), false);
 }
 
+function updateReliability(socket: string, conn: ws.connection): void {
+    console.log("Getting reliability stats for " + socket);
+    db.getReliability(socket, onReliabilityStatsReady, conn);
+}
+
 function onReliabilityStatsReady(stats: Object, conn: ws.connection): void {
     console.log("Stats ready! Sending!");
+    console.log("REPLY_RELIABILITY: " + JSON.stringify(stats));
     conn.send(stats);
 }
 
@@ -81,6 +85,14 @@ wsServer.on('request', function (req) {
         processResponse(connection);
         // Loop every 5 minutes
         setInterval(processResponse, 300000, connection);
+        // Respond to requests for reliability updates
+        connection.on('message', function (message) {
+            var decodedMsg: Object = JSON.parse(message.utf8Data);
+            console.log("DEBUG: message reply: " + JSON.stringify(decodedMsg));
+            if ("type" in decodedMsg && decodedMsg["type"] === "RELIBILITY_QUERY") {
+                updateReliability(decodedMsg["endpoint"], connection);
+            }
+        });
     }
 });
 
